@@ -129,7 +129,7 @@ a {
 
 
 /* =========================================
-   NAVIGATION
+   NAVEGAÇÃO
 ========================================= */
 
 .navigation {
@@ -177,6 +177,7 @@ a {
 
 .icon-link {
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -241,7 +242,7 @@ a {
 
 
 /* =========================================
-   DIVIDER DO LOGO
+   DIVISOR DO LOGO
 ========================================= */
 
 .brand-divider {
@@ -281,7 +282,7 @@ a {
 
 
 /* =========================================
-   BOTANICAL SYMBOL
+   SÍMBOLO BOTÂNICO
 ========================================= */
 
 .botanical-symbol {
@@ -306,7 +307,7 @@ a {
 
 
 /* =========================================
-   BOTÃO
+   BOTÃO HERO
 ========================================= */
 
 .hero-button {
@@ -522,6 +523,352 @@ a {
 
 
 /* =========================================
+   SEÇÃO DE PRODUTOS
+========================================= */
+
+.products-section {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 620px;
+
+  padding: 100px 0 80px;
+
+  background: #f5f1e9;
+
+  color: #25271f;
+
+  overflow: hidden;
+}
+
+
+/* =========================================
+   CABEÇALHO DOS PRODUTOS
+========================================= */
+
+.products-header {
+  text-align: center;
+
+  margin-bottom: 55px;
+}
+
+.products-eyebrow {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 0.62rem;
+
+  font-weight: 400;
+
+  letter-spacing: 0.2em;
+
+  color: #77786e;
+}
+
+.products-header h2 {
+  margin: 0;
+
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: clamp(
+    2.3rem,
+    3.5vw,
+    3.5rem
+  );
+
+  font-weight: 400;
+
+  letter-spacing: 0.08em;
+
+  line-height: 1;
+}
+
+
+/* =========================================
+   CARROSSEL
+========================================= */
+
+.products-carousel {
+  position: relative;
+
+  width: 100%;
+
+  max-width: 1180px;
+
+  margin: 0 auto;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0 55px;
+}
+
+
+/* =========================================
+   ÁREA DOS CARDS
+========================================= */
+
+.products-track-wrapper {
+  width: 100%;
+
+  overflow: hidden;
+}
+
+.products-track {
+  display: flex;
+
+  gap: 24px;
+
+  transition:
+    transform 0.6s cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+
+  will-change: transform;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.product-card {
+  flex: 0 0 calc(
+    (100% - 72px) / 4
+  );
+
+  min-width: 0;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-7px);
+}
+
+
+/* =========================================
+   IMAGEM DO CARD
+========================================= */
+
+.product-image {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  background: #ddd6c9;
+
+  border-radius: 6px;
+}
+
+.product-image img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+  transition:
+    transform 0.7s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+
+/* =========================================
+   INFORMAÇÕES DOS CARDS
+========================================= */
+
+.product-info {
+  padding-top: 18px;
+
+  text-align: center;
+}
+
+.product-info h3 {
+  margin: 0 0 7px;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 0.78rem;
+
+  font-weight: 500;
+
+  letter-spacing: 0.14em;
+
+  color: #25271f;
+
+  line-height: 1.2;
+}
+
+.product-info span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 0.72rem;
+
+  font-weight: 400;
+
+  letter-spacing: 0.04em;
+
+  color: #77786e;
+
+  line-height: 1.4;
+}
+
+.product-info strong {
+  display: block;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 0.75rem;
+
+  font-weight: 500;
+
+  letter-spacing: 0.03em;
+
+  color: #36382f;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================
+   SETAS DO CARROSSEL
+========================================= */
+
+.carousel-arrow {
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  z-index: 5;
+
+  width: 34px;
+
+  height: 34px;
+
+  border: 1px solid rgba(
+    37,
+    39,
+    31,
+    0.25
+  );
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #36382f;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.95rem;
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.carousel-prev {
+  left: 8px;
+}
+
+.carousel-next {
+  right: 8px;
+}
+
+.carousel-arrow:hover:not(:disabled) {
+  background: #25271f;
+
+  color: #fff;
+
+  transform:
+    translateY(-50%)
+    scale(1.08);
+}
+
+.carousel-arrow:disabled {
+  cursor: default;
+}
+
+
+/* =========================================
+   DOTS
+========================================= */
+
+.carousel-dots {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 40px;
+}
+
+.carousel-dot {
+  width: 6px;
+
+  height: 6px;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background: #c5c2b9;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: #41443a;
+
+  transform: scale(1.4);
+}
+
+
+/* =========================================
    TABLET
 ========================================= */
 
@@ -539,6 +886,19 @@ a {
 
   .header-actions {
     gap: 18px;
+  }
+
+
+  /* PRODUTOS */
+
+  .products-section {
+    padding: 80px 0 65px;
+  }
+
+  .product-card {
+    flex: 0 0 calc(
+      (100% - 48px) / 3
+    );
   }
 
 }
@@ -584,6 +944,7 @@ a {
 
   .icon-link svg {
     width: 20px;
+
     height: 20px;
   }
 
@@ -656,11 +1017,105 @@ a {
     bottom: 20px;
   }
 
+
+  /* =========================================
+     PRODUTOS NO MOBILE
+  ========================================= */
+
+  .products-section {
+    min-height: auto;
+
+    padding: 70px 0 55px;
+  }
+
+
+  .products-header {
+    margin-bottom: 38px;
+  }
+
+
+  .products-eyebrow {
+    font-size: 0.55rem;
+  }
+
+
+  .products-header h2 {
+    font-size: 2.1rem;
+  }
+
+
+  .products-carousel {
+    padding: 0 45px;
+  }
+
+
+  .products-track {
+    gap: 15px;
+  }
+
+
+  .product-card {
+    flex: 0 0 calc(
+      (100% - 15px) / 2
+    );
+  }
+
+
+  /* TEXTOS MOBILE */
+
+  .product-info {
+    padding-top: 15px;
+  }
+
+
+  .product-info h3 {
+    font-size: 0.68rem;
+
+    margin-bottom: 6px;
+
+    letter-spacing: 0.11em;
+  }
+
+
+  .product-info span {
+    font-size: 0.62rem;
+
+    margin-bottom: 6px;
+
+    letter-spacing: 0.03em;
+  }
+
+
+  .product-info strong {
+    font-size: 0.65rem;
+
+    letter-spacing: 0.02em;
+  }
+
+
+  .carousel-arrow {
+    width: 30px;
+
+    height: 30px;
+
+    font-size: 0.8rem;
+  }
+
+
+  .carousel-prev {
+    left: 8px;
+  }
+
+
+  .carousel-next {
+    right: 8px;
+  }
+
 }
 
 
 /* =========================================
-   TELAS MUITO PEQUENAS
+   CELULARES PEQUENOS
 ========================================= */
 
 @media (max-width: 380px) {
@@ -669,8 +1124,29 @@ a {
     font-size: 3.4rem;
   }
 
+
   .hero-button {
     max-width: 270px;
+  }
+
+
+  .product-card {
+    flex: 0 0 100%;
+  }
+
+
+  .product-info h3 {
+    font-size: 0.72rem;
+  }
+
+
+  .product-info span {
+    font-size: 0.66rem;
+  }
+
+
+  .product-info strong {
+    font-size: 0.68rem;
   }
 
 }
