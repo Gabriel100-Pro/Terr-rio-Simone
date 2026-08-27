@@ -1,414 +1,951 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-  const track = document.querySelector(".products-track");
-  const wrapper = document.querySelector(".products-track-wrapper");
-
-  const prevButton = document.querySelector(".carousel-prev");
-  const nextButton = document.querySelector(".carousel-next");
-
-  const dots = document.querySelectorAll(".carousel-dot");
-  const cards = document.querySelectorAll(".product-card");
-
-  if (!track || !wrapper || !cards.length) return;
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
 
-  /* =========================================
-     CONFIGURAÇÕES
-  ========================================= */
+    /* =====================================================
+       CARROSSEL DE PRODUTOS
+    ====================================================== */
 
-  let currentSlide = 0;
-
-  let startX = 0;
-  let currentX = 0;
-
-  let isDragging = false;
-
-  let autoPlay;
-
-
-  /* =========================================
-     CALCULA QUANTOS CARDS APARECEM
-  ========================================= */
-
-  function getVisibleCards() {
-
-    const width = window.innerWidth;
-
-    if (width <= 380) {
-      return 1;
-    }
-
-    if (width <= 600) {
-      return 2;
-    }
-
-    if (width <= 900) {
-      return 3;
-    }
-
-    return 4;
-  }
-
-
-  /* =========================================
-     TOTAL DE SLIDES
-  ========================================= */
-
-  function getTotalSlides() {
-
-    const visibleCards = getVisibleCards();
-
-    return Math.max(
-      1,
-      cards.length - visibleCards + 1
-    );
-  }
-
-
-  /* =========================================
-     ATUALIZA CARROSSEL
-  ========================================= */
-
-  function updateCarousel() {
-
-    const visibleCards = getVisibleCards();
-
-    const cardWidth = cards[0].offsetWidth;
-
-    const gap = parseFloat(
-      window.getComputedStyle(track).gap
-    ) || 0;
-
-    const offset =
-      currentSlide * (cardWidth + gap);
-
-    track.style.transform =
-      `translateX(-${offset}px)`;
-
-
-    /* Atualiza bolinhas */
-
-    dots.forEach((dot, index) => {
-
-      dot.classList.toggle(
-        "active",
-        index === currentSlide
+    const productTrack =
+      document.querySelector(
+        ".products-track"
       );
 
-    });
+    const productWrapper =
+      document.querySelector(
+        ".products-track-wrapper"
+      );
+
+    const prevButton =
+      document.querySelector(
+        ".carousel-prev"
+      );
+
+    const nextButton =
+      document.querySelector(
+        ".carousel-next"
+      );
+
+    const dots =
+      document.querySelectorAll(
+        ".carousel-dot"
+      );
+
+    const productCards =
+      document.querySelectorAll(
+        ".product-card"
+      );
 
 
-    /* Controla limite das setas */
+    let currentSlide = 0;
 
-    prevButton.disabled =
-      currentSlide === 0;
+    let autoPlay = null;
 
-    nextButton.disabled =
-      currentSlide >= getTotalSlides() - 1;
+    let startX = 0;
 
+    let currentX = 0;
 
-    prevButton.style.opacity =
-      currentSlide === 0 ? "0.35" : "1";
-
-    nextButton.style.opacity =
-      currentSlide >= getTotalSlides() - 1
-        ? "0.35"
-        : "1";
-  }
+    let isDragging = false;
 
 
-  /* =========================================
-     PRÓXIMO SLIDE
-  ========================================= */
 
-  function nextSlide() {
+    /* =====================================================
+       QUANTIDADE DE CARDS
+    ====================================================== */
 
-    const totalSlides = getTotalSlides();
+    function getVisibleCards() {
 
-    if (currentSlide < totalSlides - 1) {
+      const width =
+        window.innerWidth;
+
+
+      if (width <= 380) {
+        return 1;
+      }
+
+
+      if (width <= 600) {
+        return 2;
+      }
+
+
+      if (width <= 900) {
+        return 3;
+      }
+
+
+      return 4;
+
+    }
+
+
+
+    /* =====================================================
+       TOTAL DE SLIDES
+    ====================================================== */
+
+    function getTotalSlides() {
+
+      if (!productCards.length) {
+        return 1;
+      }
+
+
+      return Math.max(
+        1,
+        productCards.length -
+        getVisibleCards() +
+        1
+      );
+
+    }
+
+
+
+    /* =====================================================
+       ATUALIZAR CARROSSEL
+    ====================================================== */
+
+    function updateCarousel() {
+
+      if (
+        !productTrack ||
+        !productCards.length
+      ) {
+        return;
+      }
+
+
+      const cardWidth =
+        productCards[0].offsetWidth;
+
+
+      const gap =
+        parseFloat(
+          getComputedStyle(
+            productTrack
+          ).gap
+        ) || 0;
+
+
+      const offset =
+        currentSlide *
+        (
+          cardWidth +
+          gap
+        );
+
+
+      productTrack.style.transform =
+        `translateX(-${offset}px)`;
+
+
+      dots.forEach(
+        (
+          dot,
+          index
+        ) => {
+
+          dot.classList.toggle(
+            "active",
+            index === currentSlide
+          );
+
+        }
+      );
+
+    }
+
+
+
+    /* =====================================================
+       PRÓXIMO
+    ====================================================== */
+
+    function nextSlide() {
+
+      const total =
+        getTotalSlides();
+
 
       currentSlide++;
 
-    } else {
-
-      currentSlide = 0;
-
-    }
-
-    updateCarousel();
-  }
-
-
-  /* =========================================
-     SLIDE ANTERIOR
-  ========================================= */
-
-  function previousSlide() {
-
-    const totalSlides = getTotalSlides();
-
-    if (currentSlide > 0) {
-
-      currentSlide--;
-
-    } else {
-
-      currentSlide = totalSlides - 1;
-
-    }
-
-    updateCarousel();
-  }
-
-
-  /* =========================================
-     CLIQUE NAS SETAS
-  ========================================= */
-
-  nextButton.addEventListener(
-    "click",
-    () => {
-
-      nextSlide();
-
-      restartAutoPlay();
-
-    }
-  );
-
-
-  prevButton.addEventListener(
-    "click",
-    () => {
-
-      previousSlide();
-
-      restartAutoPlay();
-
-    }
-  );
-
-
-  /* =========================================
-     CLIQUE NAS BOLINHAS
-  ========================================= */
-
-  dots.forEach((dot, index) => {
-
-    dot.addEventListener(
-      "click",
-      () => {
-
-        const totalSlides =
-          getTotalSlides();
-
-        currentSlide =
-          Math.min(
-            index,
-            totalSlides - 1
-          );
-
-        updateCarousel();
-
-        restartAutoPlay();
-
-      }
-    );
-
-  });
-
-
-  /* =========================================
-     DRAG COM MOUSE
-  ========================================= */
-
-  track.addEventListener(
-    "mousedown",
-    (event) => {
-
-      isDragging = true;
-
-      startX = event.clientX;
-
-      track.style.transition = "none";
-
-    }
-  );
-
-
-  window.addEventListener(
-    "mousemove",
-    (event) => {
-
-      if (!isDragging) return;
-
-      currentX = event.clientX;
-
-    }
-  );
-
-
-  window.addEventListener(
-    "mouseup",
-    () => {
-
-      if (!isDragging) return;
-
-      isDragging = false;
-
-      track.style.transition =
-        "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)";
-
-      const difference =
-        currentX - startX;
-
-
-      if (Math.abs(difference) > 50) {
-
-        if (difference < 0) {
-
-          nextSlide();
-
-        } else {
-
-          previousSlide();
-
-        }
-
-        restartAutoPlay();
-
+      if (
+        currentSlide >= total
+      ) {
+        currentSlide = 0;
       }
 
-    }
-  );
-
-
-  /* =========================================
-     SWIPE NO CELULAR
-  ========================================= */
-
-  track.addEventListener(
-    "touchstart",
-    (event) => {
-
-      startX =
-        event.touches[0].clientX;
-
-    },
-    { passive: true }
-  );
-
-
-  track.addEventListener(
-    "touchend",
-    (event) => {
-
-      currentX =
-        event.changedTouches[0].clientX;
-
-      const difference =
-        currentX - startX;
-
-
-      if (Math.abs(difference) > 50) {
-
-        if (difference < 0) {
-
-          nextSlide();
-
-        } else {
-
-          previousSlide();
-
-        }
-
-        restartAutoPlay();
-
-      }
-
-    },
-    { passive: true }
-  );
-
-
-  /* =========================================
-     AUTOPLAY
-  ========================================= */
-
-  function startAutoPlay() {
-
-    autoPlay = setInterval(() => {
-
-      nextSlide();
-
-    }, 5000);
-
-  }
-
-
-  function restartAutoPlay() {
-
-    clearInterval(autoPlay);
-
-    startAutoPlay();
-
-  }
-
-
-  /* =========================================
-     PAUSAR AO PASSAR O MOUSE
-  ========================================= */
-
-  wrapper.addEventListener(
-    "mouseenter",
-    () => {
-
-      clearInterval(autoPlay);
-
-    }
-  );
-
-
-  wrapper.addEventListener(
-    "mouseleave",
-    () => {
-
-      startAutoPlay();
-
-    }
-  );
-
-
-  /* =========================================
-     RESPONSIVIDADE
-  ========================================= */
-
-  window.addEventListener(
-    "resize",
-    () => {
-
-      const totalSlides =
-        getTotalSlides();
-
-      if (currentSlide >= totalSlides) {
-
-        currentSlide =
-          totalSlides - 1;
-
-      }
 
       updateCarousel();
 
     }
-  );
 
 
-  /* =========================================
-     INICIALIZAÇÃO
-  ========================================= */
 
-  updateCarousel();
+    /* =====================================================
+       ANTERIOR
+    ====================================================== */
 
-  startAutoPlay();
+    function previousSlide() {
 
-});
+      const total =
+        getTotalSlides();
+
+
+      currentSlide--;
+
+
+      if (
+        currentSlide < 0
+      ) {
+        currentSlide =
+          total - 1;
+      }
+
+
+      updateCarousel();
+
+    }
+
+
+
+    /* =====================================================
+       AUTOPLAY
+    ====================================================== */
+
+    function startAutoPlay() {
+
+      clearInterval(
+        autoPlay
+      );
+
+
+      autoPlay =
+        setInterval(
+          nextSlide,
+          5000
+        );
+
+    }
+
+
+    function stopAutoPlay() {
+
+      clearInterval(
+        autoPlay
+      );
+
+      autoPlay = null;
+
+    }
+
+
+
+    /* =====================================================
+       BOTÕES
+    ====================================================== */
+
+    if (nextButton) {
+
+      nextButton.addEventListener(
+        "click",
+        () => {
+
+          nextSlide();
+
+          startAutoPlay();
+
+        }
+      );
+
+    }
+
+
+    if (prevButton) {
+
+      prevButton.addEventListener(
+        "click",
+        () => {
+
+          previousSlide();
+
+          startAutoPlay();
+
+        }
+      );
+
+    }
+
+
+
+    /* =====================================================
+       DOTS
+    ====================================================== */
+
+    dots.forEach(
+      (
+        dot,
+        index
+      ) => {
+
+        dot.addEventListener(
+          "click",
+          () => {
+
+            currentSlide =
+              Math.min(
+                index,
+                getTotalSlides() - 1
+              );
+
+            updateCarousel();
+
+            startAutoPlay();
+
+          }
+        );
+
+      }
+    );
+
+
+
+    /* =====================================================
+       DRAG DESKTOP
+    ====================================================== */
+
+    if (productTrack) {
+
+      productTrack.addEventListener(
+        "mousedown",
+        (event) => {
+
+          isDragging = true;
+
+          startX =
+            event.clientX;
+
+          currentX =
+            event.clientX;
+
+          productTrack.classList.add(
+            "dragging"
+          );
+
+          stopAutoPlay();
+
+        }
+      );
+
+
+      window.addEventListener(
+        "mousemove",
+        (event) => {
+
+          if (!isDragging) {
+            return;
+          }
+
+          currentX =
+            event.clientX;
+
+        }
+      );
+
+
+      window.addEventListener(
+        "mouseup",
+        () => {
+
+          if (!isDragging) {
+            return;
+          }
+
+          isDragging = false;
+
+          productTrack.classList.remove(
+            "dragging"
+          );
+
+
+          const difference =
+            currentX -
+            startX;
+
+
+          if (
+            Math.abs(
+              difference
+            ) > 50
+          ) {
+
+            if (
+              difference < 0
+            ) {
+
+              nextSlide();
+
+            } else {
+
+              previousSlide();
+
+            }
+
+          }
+
+
+          startAutoPlay();
+
+        }
+      );
+
+
+
+      /* =================================================
+         TOUCH MOBILE
+      ================================================== */
+
+      productTrack.addEventListener(
+        "touchstart",
+        (event) => {
+
+          startX =
+            event.touches[0]
+              .clientX;
+
+        },
+        {
+          passive: true
+        }
+      );
+
+
+      productTrack.addEventListener(
+        "touchend",
+        (event) => {
+
+          currentX =
+            event.changedTouches[0]
+              .clientX;
+
+
+          const difference =
+            currentX -
+            startX;
+
+
+          if (
+            Math.abs(
+              difference
+            ) > 50
+          ) {
+
+            if (
+              difference < 0
+            ) {
+
+              nextSlide();
+
+            } else {
+
+              previousSlide();
+
+            }
+
+          }
+
+
+          startAutoPlay();
+
+        },
+        {
+          passive: true
+        }
+      );
+
+
+      if (productWrapper) {
+
+        productWrapper.addEventListener(
+          "mouseenter",
+          stopAutoPlay
+        );
+
+
+        productWrapper.addEventListener(
+          "mouseleave",
+          startAutoPlay
+        );
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       INICIALIZAR PRODUTOS
+    ====================================================== */
+
+    updateCarousel();
+
+    startAutoPlay();
+
+
+
+    /* =====================================================
+       NOVA SEÇÃO
+       CONTADORES
+    ====================================================== */
+
+    const universeSection =
+      document.querySelector(
+        ".universe-section"
+      );
+
+
+    const counters =
+      document.querySelectorAll(
+        ".stat-number"
+      );
+
+
+    let countersStarted = false;
+
+
+
+    /* =====================================================
+       ANIMAÇÃO DOS NÚMEROS
+    ====================================================== */
+
+    function animateCounter(
+      element
+    ) {
+
+      const target =
+        Number(
+          element.dataset.target
+        );
+
+
+      const prefix =
+        element.dataset.prefix ||
+        "";
+
+
+      const suffix =
+        element.dataset.suffix ||
+        "";
+
+
+      const duration =
+        2200;
+
+
+      const startTime =
+        performance.now();
+
+
+      function update(
+        currentTime
+      ) {
+
+        const elapsed =
+          currentTime -
+          startTime;
+
+
+        const progress =
+          Math.min(
+            elapsed /
+            duration,
+            1
+          );
+
+
+        /*
+          Easing suave.
+        */
+
+        const eased =
+          1 -
+          Math.pow(
+            1 - progress,
+            3
+          );
+
+
+        const value =
+          Math.floor(
+            eased *
+            target
+          );
+
+
+        element.textContent =
+          prefix +
+          value +
+          suffix;
+
+
+        if (
+          progress < 1
+        ) {
+
+          requestAnimationFrame(
+            update
+          );
+
+        } else {
+
+          element.textContent =
+            prefix +
+            target +
+            suffix;
+
+        }
+
+      }
+
+
+      requestAnimationFrame(
+        update
+      );
+
+    }
+
+
+
+    /* =====================================================
+       OBSERVER DOS NÚMEROS
+    ====================================================== */
+
+    if (
+      universeSection &&
+      counters.length
+    ) {
+
+      const counterObserver =
+        new IntersectionObserver(
+          (
+            entries,
+            observer
+          ) => {
+
+            entries.forEach(
+              (entry) => {
+
+                if (
+                  entry.isIntersecting &&
+                  !countersStarted
+                ) {
+
+                  countersStarted =
+                    true;
+
+
+                  counters.forEach(
+                    animateCounter
+                  );
+
+
+                  observer.disconnect();
+
+                }
+
+              }
+            );
+
+          },
+          {
+            threshold: 0.35
+          }
+        );
+
+
+      counterObserver.observe(
+        universeSection
+      );
+
+    }
+
+
+
+    /* =====================================================
+       CARDS INFERIORES
+       LOOP INFINITO
+    ====================================================== */
+
+    const cardsTrack =
+      document.querySelector(
+        "#universeCardsTrack"
+      );
+
+
+    if (cardsTrack) {
+
+      let position = 0;
+
+      let speed = 0.55;
+
+      let paused = false;
+
+      let originalWidth = 0;
+
+
+      /*
+        Como temos os mesmos
+        3 cards duplicados,
+        usamos metade da largura
+        para criar o loop infinito.
+      */
+
+      function calculateWidth() {
+
+        originalWidth =
+          cardsTrack.scrollWidth /
+          2;
+
+      }
+
+
+      calculateWidth();
+
+
+      /* =================================================
+         LOOP DOS CARDS
+      ================================================== */
+
+      function animateCards() {
+
+        if (!paused) {
+
+          position -= speed;
+
+
+          if (
+            Math.abs(position) >=
+            originalWidth
+          ) {
+
+            position = 0;
+
+          }
+
+
+          cardsTrack.style.transform =
+            `translate3d(${position}px, 0, 0)`;
+
+        }
+
+
+        requestAnimationFrame(
+          animateCards
+        );
+
+      }
+
+
+      animateCards();
+
+
+
+      /* =================================================
+         PAUSAR AO PASSAR MOUSE
+      ================================================== */
+
+      const cardsWindow =
+        document.querySelector(
+          ".universe-cards-window"
+        );
+
+
+      if (cardsWindow) {
+
+        cardsWindow.addEventListener(
+          "mouseenter",
+          () => {
+
+            paused = true;
+
+          }
+        );
+
+
+        cardsWindow.addEventListener(
+          "mouseleave",
+          () => {
+
+            paused = false;
+
+          }
+        );
+
+      }
+
+
+
+      /* =================================================
+         TOUCH MOBILE
+      ================================================== */
+
+      if (cardsWindow) {
+
+        cardsWindow.addEventListener(
+          "touchstart",
+          () => {
+
+            paused = true;
+
+          },
+          {
+            passive: true
+          }
+        );
+
+
+        cardsWindow.addEventListener(
+          "touchend",
+          () => {
+
+            setTimeout(
+              () => {
+
+                paused = false;
+
+              },
+              700
+            );
+
+          },
+          {
+            passive: true
+          }
+        );
+
+      }
+
+
+
+      /* =================================================
+         RESIZE
+      ================================================== */
+
+      window.addEventListener(
+        "resize",
+        () => {
+
+          calculateWidth();
+
+        }
+      );
+
+    }
+
+
+
+    /* =====================================================
+       SCROLL INDICATOR
+    ====================================================== */
+
+    const heroScroll =
+      document.querySelector(
+        "#heroScroll"
+      );
+
+
+    if (heroScroll) {
+
+      window.addEventListener(
+        "scroll",
+        () => {
+
+          if (
+            window.scrollY > 100
+          ) {
+
+            heroScroll.style.opacity =
+              "0";
+
+          } else {
+
+            heroScroll.style.opacity =
+              "1";
+
+          }
+
+        },
+        {
+          passive: true
+        }
+      );
+
+    }
+
+
+
+    /* =====================================================
+       SMOOTH SCROLL
+    ====================================================== */
+
+    document
+      .querySelectorAll(
+        'a[href^="#"]'
+      )
+      .forEach(
+        (anchor) => {
+
+          anchor.addEventListener(
+            "click",
+            (event) => {
+
+              const targetId =
+                anchor.getAttribute(
+                  "href"
+                );
+
+
+              if (
+                !targetId ||
+                targetId === "#"
+              ) {
+                return;
+              }
+
+
+              const target =
+                document.querySelector(
+                  targetId
+                );
+
+
+              if (!target) {
+                return;
+              }
+
+
+              event.preventDefault();
+
+
+              window.scrollTo({
+
+                top:
+                  target.getBoundingClientRect()
+                    .top +
+                  window.scrollY,
+
+                behavior:
+                  "smooth"
+
+              });
+
+            }
+          );
+
+        }
+      );
+
+  }
+);
