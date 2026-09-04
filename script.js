@@ -947,5 +947,62 @@ document.addEventListener(
         }
       );
 
+
+
+    /* =====================================================
+       REVEAL AO ENTRAR NA VIEWPORT
+       (CUIDADOS / CONTATO)
+    ====================================================== */
+
+    const revealElements =
+      document.querySelectorAll(
+        "[data-reveal]"
+      );
+
+
+    if (revealElements.length) {
+
+      const revealObserver =
+        new IntersectionObserver(
+          (entries, observer) => {
+
+            entries.forEach(
+              (entry) => {
+
+                if (entry.isIntersecting) {
+
+                  entry.target.classList.add(
+                    "is-visible"
+                  );
+
+
+                  observer.unobserve(
+                    entry.target
+                  );
+
+                }
+
+              }
+            );
+
+          },
+          {
+            threshold: 0.2
+          }
+        );
+
+
+      revealElements.forEach(
+        (element) => {
+
+          revealObserver.observe(
+            element
+          );
+
+        }
+      );
+
+    }
+
   }
 );

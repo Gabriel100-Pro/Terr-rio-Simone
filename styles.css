@@ -1156,32 +1156,484 @@ button {
 
 
 /* =====================================================
-   PLACEHOLDER
+   CUIDADOS
 ===================================================== */
 
-.placeholder-section {
-  min-height: 400px;
+.care-section {
+  position: relative;
+
+  width: 100%;
+  min-height: 100svh;
 
   display: flex;
 
+  background: #f5f1e9;
+}
+
+.care-visual {
+  position: relative;
+
+  flex: 0 0 45%;
+
+  min-height: 460px;
+
+  background-image:
+    url("assets/img\ fundo\ uidados.png");
+
+  background-size: cover;
+  background-position: left center;
+  background-repeat: no-repeat;
+}
+
+.care-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(15,17,12,0.5),
+      rgba(15,17,12,0.28) 45%,
+      rgba(15,17,12,0.62)
+    );
+}
+
+.care-visual-content {
+  position: relative;
+  z-index: 2;
+
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 10vh 7vw;
+
+  color: #f6f3ea;
+}
+
+.care-eyebrow {
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: clamp(2.6rem, 4.4vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+
+  line-height: 1;
+}
+
+.care-title {
+  margin-top: 10px;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+
+  color: rgba(246,243,234,0.78);
+}
+
+.care-lead {
+  max-width: 340px;
+  margin-top: 30px;
+
+  font-size: 0.98rem;
+  line-height: 1.8;
+
+  color: rgba(246,243,234,0.86);
+}
+
+.care-panel {
+  position: relative;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 9vh 6vw;
+}
+
+.care-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  column-gap: 48px;
+  row-gap: 46px;
+}
+
+.care-item {
+  transition: transform 0.4s ease;
+}
+
+.care-item:hover {
+  transform: translateY(-3px);
+}
+
+.care-icon {
+  display: inline-flex;
+
+  width: 30px;
+  height: 30px;
+
+  color: #5f6a45;
+}
+
+.care-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.care-item h3 {
+  margin-top: 16px;
+
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+
+  color: #262a1e;
+}
+
+.care-item p {
+  margin-top: 12px;
+
+  max-width: 320px;
+
+  font-size: 0.88rem;
+  line-height: 1.7;
+
+  color: #6b6b5c;
+}
+
+.care-note {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  margin-top: 60px;
+  padding: 24px 28px;
+
+  border: 1px solid rgba(38,42,30,0.18);
+
+  max-width: 640px;
+}
+
+.care-note-icon {
+  flex: 0 0 auto;
+
+  width: 22px;
+  height: 22px;
+
+  color: #5f6a45;
+}
+
+.care-note-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.care-note p {
+  font-size: 0.86rem;
+  line-height: 1.7;
+
+  font-style: italic;
+
+  color: #4b4d3f;
+}
+
+
+
+/* =====================================================
+   CONTATO
+===================================================== */
+
+.contact-section {
+  position: relative;
+
+  width: 100%;
+  min-height: 100svh;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  background-image:
+    url("assets/img\ fundo\ contato.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: #f6f3ea;
+}
+
+.contact-overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      to right,
+      rgba(8,10,7,0.86),
+      rgba(8,10,7,0.62) 55%,
+      rgba(8,10,7,0.4)
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(8,10,7,0.35),
+      rgba(8,10,7,0.15) 30%,
+      rgba(8,10,7,0.55)
+    );
+}
+
+.contact-wrapper {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1380px;
+
+  margin: 0 auto;
+  padding: 8vh 5vw;
+
+  display: grid;
+
+  grid-template-columns: 40% 60%;
+
+  gap: 60px;
+
+  align-items: center;
+}
+
+.contact-title {
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: clamp(3rem, 5.2vw, 4.6rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+
+  line-height: 1;
+}
+
+.contact-subtitle {
+  display: block;
+
+  margin-top: 18px;
+
+  font-size: 0.76rem;
+  letter-spacing: 0.28em;
+
+  color: rgba(246,243,234,0.7);
+}
+
+.contact-lead {
+  max-width: 380px;
+  margin-top: 26px;
+
+  font-size: 0.96rem;
+  line-height: 1.75;
+
+  color: rgba(246,243,234,0.8);
+}
+
+.contact-list {
+  list-style: none;
+
+  margin-top: 42px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 22px;
+}
+
+.contact-list li {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+}
+
+.contact-icon {
+  flex: 0 0 auto;
+
+  width: 22px;
+  height: 22px;
+
+  color: rgba(246,243,234,0.85);
+}
+
+.contact-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.contact-list strong {
+  display: block;
+
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+
+  color: rgba(246,243,234,0.6);
+}
+
+.contact-list p {
+  margin-top: 4px;
+
+  font-size: 0.94rem;
+
+  color: #f6f3ea;
+}
+
+.contact-form-wrapper {
+  width: 100%;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+
+  padding: 15px 4px;
+
+  background: transparent;
+
+  border: none;
+  border-bottom: 1px solid rgba(246,243,234,0.32);
+
+  color: #f6f3ea;
+
+  font-family: "Inter", sans-serif;
+  font-size: 0.92rem;
+
+  resize: none;
+
+  transition: border-color 0.4s ease;
+}
+
+.form-field textarea {
+  padding: 15px 4px;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: rgba(246,243,234,0.48);
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+
+  border-bottom-color: rgba(246,243,234,0.9);
+}
+
+.form-submit {
+  margin-top: 10px;
+
+  width: 100%;
+
+  padding: 17px 24px;
+
+  display: flex;
   align-items: center;
   justify-content: center;
 
-  background:
-    #f5f1e9;
+  gap: 16px;
 
-  color:
-    #25271f;
+  background: #5c6440;
+  border: 1px solid rgba(246,243,234,0.2);
 
-  font-family:
-    "Cormorant Garamond",
-    serif;
+  color: #f6f3ea;
 
-  font-size: 3rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
 
-  letter-spacing:
-    0.1em;
+  cursor: pointer;
+
+  transition:
+    background 0.4s ease,
+    transform 0.3s ease;
 }
+
+.form-submit svg {
+  width: 17px;
+  height: 17px;
+
+  transition: transform 0.3s ease;
+}
+
+.form-submit:hover {
+  background: #6c7550;
+  transform: translateY(-2px);
+}
+
+.form-submit:hover svg {
+  transform: translateX(4px);
+}
+
+
+
+/* =====================================================
+   REVEAL AO ENTRAR NA VIEWPORT
+===================================================== */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.care-grid .care-item {
+  opacity: 0;
+  transform: translateY(18px);
+
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.care-grid.is-visible .care-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.care-grid.is-visible .care-item:nth-child(1) { transition-delay: 0.05s; }
+.care-grid.is-visible .care-item:nth-child(2) { transition-delay: 0.15s; }
+.care-grid.is-visible .care-item:nth-child(3) { transition-delay: 0.25s; }
+.care-grid.is-visible .care-item:nth-child(4) { transition-delay: 0.35s; }
+.care-grid.is-visible .care-item:nth-child(5) { transition-delay: 0.45s; }
+.care-grid.is-visible .care-item:nth-child(6) { transition-delay: 0.55s; }
 
 
 
@@ -1576,12 +2028,104 @@ button {
       0.76rem;
   }
 
-  .placeholder-section {
-    min-height:
-      300px;
+}
 
-    font-size:
-      2rem;
+
+
+/* =====================================================
+   CUIDADOS / CONTATO — TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .care-section {
+    flex-direction: column;
+  }
+
+  .care-visual {
+    flex: none;
+
+    min-height: 60vh;
+  }
+
+  .care-panel {
+    padding: 70px 6vw;
+  }
+
+  .care-note {
+    max-width: none;
+  }
+
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+
+    gap: 56px;
+  }
+
+}
+
+
+
+/* =====================================================
+   CUIDADOS / CONTATO — MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .care-section {
+    min-height: auto;
+  }
+
+  .care-visual {
+    min-height: 52vh;
+  }
+
+  .care-visual-content {
+    padding: 8vh 7vw;
+  }
+
+  .care-panel {
+    padding: 56px 7vw 70px;
+  }
+
+  .care-grid {
+    grid-template-columns: 1fr 1fr;
+
+    column-gap: 28px;
+    row-gap: 36px;
+  }
+
+  .care-note {
+    margin-top: 44px;
+    padding: 20px 22px;
+  }
+
+  .contact-section {
+    min-height: auto;
+
+    padding: 90px 0;
+  }
+
+  .contact-wrapper {
+    padding: 0 7vw;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+
+/* =====================================================
+   CUIDADOS — CELULARES PEQUENOS
+===================================================== */
+
+@media (max-width: 460px) {
+
+  .care-grid {
+    grid-template-columns: 1fr;
   }
 
 }
